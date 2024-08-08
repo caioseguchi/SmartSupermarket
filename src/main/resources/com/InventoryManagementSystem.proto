@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package com.smartmarket;
+
+message RestockRequest {
+    string product_id = 1;
+    int32 quantity_needed = 2;
+}
+
+message RestockResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+
+service InventoryManagement {
+    rpc ReceiveRestockRequests(stream RestockRequest) returns (RestockResponse);
+   
+}

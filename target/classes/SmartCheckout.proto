@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package com.smartmarket;
+
+message PaymentRequest {
+    string customer_id = 1;
+    float amount = 2;
+}
+
+message PaymentResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message ScanRequest {
+    string counter_id = 1;
+}
+
+message ScannedItem {
+    string product_id = 1;
+    string name = 2;
+    float price = 3;
+}
+
+service SmartCheckout {
+    rpc ProcessPayment(PaymentRequest) returns (PaymentResponse);
+    rpc StreamScannedItems(ScanRequest) returns (stream ScannedItem);
+}
