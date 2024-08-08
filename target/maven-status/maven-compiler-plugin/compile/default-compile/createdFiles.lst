@@ -1,4 +1,5 @@
 Services\InventoryManagementSercive$InventoryManagementImpl$1.class
+Services\InventaryManagmentServer2$InventoryManagement2Impl$1.class
 InventoryManagementGrpc.class
 com\smartmarket\SmartCheckoutOuterClass$PaymentRequestOrBuilder.class
 Client\SmartCheckoutClient$1.class
@@ -69,6 +70,7 @@ com\smartmarket\InventoryManagementSystem2$RestockSuggestionOrBuilder.class
 com\smartmarket\SmartShelvesGrpc.class
 SmartCheckout$1.class
 InventoryManagementOuterClass$RestockResponseOrBuilder.class
+Services\InventaryManagmentServer2$InventoryManagement2Impl.class
 SmartCheckoutOuterClass$PaymentRequest.class
 com\smartmarket\SmartCheckoutOuterClass$ScanRequest$Builder.class
 com\smartmarket\SmartShelvesGrpc$SmartShelvesFileDescriptorSupplier.class
@@ -144,7 +146,6 @@ com\smartmarket\InventoryManagementSystem2$RestockSuggestion.class
 SmartShelvesGrpc.class
 SmartCheckout.class
 com\smartmarket\InventoryManagementGrpc$InventoryManagementFileDescriptorSupplier.class
-Services\InventaryManagmentServer2$1.class
 InventoryManagementGrpc$InventoryManagementBaseDescriptorSupplier.class
 InventoryManagementGrpc$InventoryManagementStub.class
 com\smartmarket\InventoryManagementGrpc$InventoryManagementStub.class

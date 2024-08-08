@@ -9,20 +9,11 @@
   <name>smart-supermarket</name>
 
   <dependencies>
-	<dependency>
-	<groupId >javax.jmdns</groupId>
-	<artifactId>jmdns</artifactId>
-	<version>3.5.9</version>
-</dependency>
-	
     <dependency>
       <groupId>com.google.protobuf</groupId>
       <artifactId>protobuf-java</artifactId>
       <version>3.6.1</version>
     </dependency>
-    
-    
-    
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-netty-shaded</artifactId>
