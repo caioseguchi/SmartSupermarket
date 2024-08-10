@@ -74,11 +74,13 @@ public class InventaryManagmentServer2 {
                     responseObserver.onNext(suggestion);
                 }
 
+                //Dear with errors
                 @Override
                 public void onError(Throwable t) {
                     t.printStackTrace();
                 }
 
+                //The end of method
                 @Override
                 public void onCompleted() {
                     responseObserver.onCompleted();

@@ -47,6 +47,7 @@ com\smartmarket\SmartShelvesOuterClass$StockRequest.class
 com\smartmarket\SmartShelvesOuterClass$StockAlert$Builder.class
 com\smartmarket\SmartShelvesGrpc$SmartShelvesFutureStub.class
 gui\SmartSupermarketApp$3.class
+jmDNS\ServerWithJmDNS.class
 com\smartmarket\SmartShelvesOuterClass.class
 com\smartmarket\InventoryManagement2Grpc$InventoryManagement2BlockingStub.class
 com\smartmarket\InventoryManagementGrpc$InventoryManagementBaseDescriptorSupplier.class
@@ -65,6 +66,7 @@ com\smartmarket\SmartShelvesOuterClass$ProductInfoOrBuilder.class
 com\smartmarket\InventoryManagementSystem2$InventoryUpdate$Builder.class
 com\smartmarket\InventoryManagementGrpc$InventoryManagementStub.class
 com\smartmarket\InventoryManagementGrpc$InventoryManagementFutureStub.class
+jmDNS\ClientWithJmDNS.class
 com\smartmarket\SmartCheckoutGrpc$SmartCheckoutBlockingStub.class
 com\smartmarket\InventoryManagement2Grpc$MethodHandlers.class
 gui\SmartSupermarketApp$6.class
@@ -97,6 +99,7 @@ com\smartmarket\SmartCheckoutOuterClass$ScannedItem$1.class
 com\smartmarket\SmartShelvesOuterClass$StockAlertOrBuilder.class
 Client\SmartShelvesClient$1.class
 com\smartmarket\SmartShelvesGrpc$SmartShelvesImplBase.class
+jmDNS\ClientWithJmDNS$1.class
 com\smartmarket\InventoryManagementSystem$RestockRequest$Builder.class
 com\smartmarket\InventoryManagementSystem$RestockResponse$Builder.class
 com\smartmarket\SmartCheckoutOuterClass$PaymentResponse$Builder.class

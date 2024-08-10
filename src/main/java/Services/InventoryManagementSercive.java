@@ -16,6 +16,7 @@ public class InventoryManagementSercive {
     private static final Logger logger = Logger.getLogger(InventoryManagementSercive.class.getName());
     private Server server;
 
+    //Start the method
     private void start() throws IOException {
         int port = 50051;
         server = ServerBuilder.forPort(port)
@@ -23,6 +24,8 @@ public class InventoryManagementSercive {
                 .build()
                 .start();
         logger.info("Server started, listening on " + port);
+        
+        //Turn of the method properly
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.err.println("*** shutting down gRPC server since JVM is shutting down");
             InventoryManagementSercive.this.stop();
@@ -30,18 +33,21 @@ public class InventoryManagementSercive {
         }));
     }
 
+    //stop the server
     void stop() {
         if (server != null) {
             server.shutdown();
         }
     }
 
+    //keep the server running while the thread is running
     private void blockUntilShutdown() throws InterruptedException {
         if (server != null) {
             server.awaitTermination();
         }
     }
 
+    
     public static void main(String[] args) throws IOException, InterruptedException {
         final InventoryManagementSercive server = new InventoryManagementSercive();
         server.start();
@@ -59,11 +65,13 @@ public class InventoryManagementSercive {
                             " with quantity needed: " + restockRequest.getQuantityNeeded());
                 }
 
+                //Deal with errors
                 @Override
                 public void onError(Throwable t) {
                     t.printStackTrace();
                 }
 
+                //The end
                 @Override
                 public void onCompleted() {
                     RestockResponse response = RestockResponse.newBuilder()

@@ -16,10 +16,12 @@ import io.grpc.stub.StreamObserver;
 
 public class SmartCheckoutClient {
 
+	//Set communication class
     private final ManagedChannel channel;
     private final SmartCheckoutGrpc.SmartCheckoutBlockingStub blockingStub;
     private final SmartCheckoutGrpc.SmartCheckoutStub asyncStub;
 
+    //constructor
     public SmartCheckoutClient(String host, int port) {
         this.channel = ManagedChannelBuilder.forAddress(host, port)
                 .usePlaintext()
@@ -28,20 +30,26 @@ public class SmartCheckoutClient {
         asyncStub = SmartCheckoutGrpc.newStub(channel);
     }
 
+    //Turn off the channel after 5 seconds
     public void shutdown() throws InterruptedException {
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
 
+    //Payment method
     public void processPayment(String customerId, float amount) {
+    	//set inputs
         PaymentRequest request = PaymentRequest.newBuilder()
                 .setCustomerId(customerId)
                 .setAmount(amount)
                 .build();
+        
+        //output
         PaymentResponse response = blockingStub.processPayment(request);
         System.out.println("Payment Response: " + response.getMessage());
     }
 
     public void streamScannedItems(String counterId) {
+    	//input
         ScanRequest request = ScanRequest.newBuilder()
                 .setCounterId(counterId)
                 .build();
@@ -49,7 +57,8 @@ public class SmartCheckoutClient {
         CountDownLatch finishLatch = new CountDownLatch(1);
 
         StreamObserver<ScannedItem> responseObserver = new StreamObserver<ScannedItem>() {
-            @Override
+           //Output
+        	@Override
             public void onNext(ScannedItem item) {
                 System.out.println("Scanned Item: " + item.getName() + " - " + item.getPrice());
             }
@@ -80,10 +89,10 @@ public class SmartCheckoutClient {
         SmartCheckoutClient client = new SmartCheckoutClient("localhost", 9091);
 
         try {
-            // Unary call example
+            // Unary call
             client.processPayment("cust123", 99.99f);
 
-            // Server streaming call example
+            // Server streaming
             client.streamScannedItems("counter1");
         } finally {
             client.shutdown();

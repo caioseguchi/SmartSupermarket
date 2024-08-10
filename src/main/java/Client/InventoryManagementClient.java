@@ -13,11 +13,13 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 
+//Communication
 public class InventoryManagementClient {
     private static final Logger logger = Logger.getLogger(InventoryManagementClient.class.getName());
     private final ManagedChannel channel;
     private final InventoryManagementGrpc.InventoryManagementStub asyncStub;
 
+    //Constructor
     public InventoryManagementClient(String host, int port) {
         this.channel = ManagedChannelBuilder.forAddress(host, port)
                 .usePlaintext()
@@ -25,25 +27,33 @@ public class InventoryManagementClient {
         asyncStub = InventoryManagementGrpc.newStub(channel);
     }
 
+    //Turn of the stream
     public void shutdown() throws InterruptedException {
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
 
+    //method
     public void sendRestockRequests() throws InterruptedException {
+    	
+    	//Wait until the stream finish
         final CountDownLatch finishLatch = new CountDownLatch(1);
 
         StreamObserver<RestockResponse> responseObserver = new StreamObserver<RestockResponse>() {
+        	//output
             @Override
             public void onNext(RestockResponse restockResponse) {
                 logger.info("Received response: " + restockResponse.getMessage());
             }
 
+            //deal error
             @Override
             public void onError(Throwable t) {
                 logger.log(Level.SEVERE, "Request failed: ", t);
                 finishLatch.countDown();
             }
+            
 
+            //the end of method
             @Override
             public void onCompleted() {
                 logger.info("All requests completed");
@@ -54,7 +64,7 @@ public class InventoryManagementClient {
         StreamObserver<RestockRequest> requestObserver = asyncStub.receiveRestockRequests(responseObserver);
         try {
             for (int i = 0; i < 5; i++) {
-                RestockRequest request = RestockRequest.newBuilder()
+                RestockRequest request = RestockRequest.newBuilder()//build the message 
                         .setProductId("Product-" + i)
                         .setQuantityNeeded(10 + i)
                         .build();
@@ -69,6 +79,7 @@ public class InventoryManagementClient {
         finishLatch.await(1, TimeUnit.MINUTES);
     }
 
+    //make the call
     public static void main(String[] args) throws InterruptedException {
         InventoryManagementClient client = new InventoryManagementClient("localhost", 50051);
         try {

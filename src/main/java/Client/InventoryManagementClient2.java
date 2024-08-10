@@ -13,11 +13,13 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 
+//Communication
 public class InventoryManagementClient2 {
     private static final Logger logger = Logger.getLogger(InventoryManagementClient2.class.getName());
     private final ManagedChannel channel;
     private final InventoryManagement2Grpc.InventoryManagement2Stub asyncStub;
 
+    //Constructor
     public InventoryManagementClient2(String host, int port) {
         this.channel = ManagedChannelBuilder.forAddress(host, port)
                 .usePlaintext()
@@ -25,26 +27,33 @@ public class InventoryManagementClient2 {
         asyncStub = InventoryManagement2Grpc.newStub(channel);
     }
 
+    //Turn of the stream
     public void shutdown() throws InterruptedException {
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
 
+    //Method
     public void biDirectionalInventoryUpdates() throws InterruptedException {
+    	//Wait the stream and
         final CountDownLatch finishLatch = new CountDownLatch(1);
 
+        
         StreamObserver<RestockSuggestion> responseObserver = new StreamObserver<RestockSuggestion>() {
-            @Override
+            //Output
+        	@Override
             public void onNext(RestockSuggestion restockSuggestion) {
                 logger.info("Received restock suggestion: Product ID: " + restockSuggestion.getProductId() +
                         ", Suggested Quantity: " + restockSuggestion.getSuggestedQuantity());
             }
 
+            //Deal with errors
             @Override
             public void onError(Throwable t) {
                 logger.log(Level.SEVERE, "Request failed: ", t);
                 finishLatch.countDown();
             }
 
+            //The end of method
             @Override
             public void onCompleted() {
                 logger.info("All requests completed");
@@ -70,8 +79,9 @@ public class InventoryManagementClient2 {
         finishLatch.await(1, TimeUnit.MINUTES);
     }
 
+    //make the call
     public static void main(String[] args) throws InterruptedException {
-        InventoryManagementClient2 client = new InventoryManagementClient2("localhost", 50051);
+        InventoryManagementClient2 client = new InventoryManagementClient2("localhost", 50052);
         try {
             client.biDirectionalInventoryUpdates();
         } finally {

@@ -17,26 +17,27 @@ public class SmartCheckoutService extends SmartCheckoutGrpc.SmartCheckoutImplBas
 
     @Override
     public void processPayment(PaymentRequest request, StreamObserver<PaymentResponse> responseObserver) {
-        // Logic to process payment
+        // Data requested by the customer
         String customerId = request.getCustomerId();
         float amount = request.getAmount();
         
-        // For demonstration, let's assume all payments are successful
+        // Send back information of payment approved
         PaymentResponse response = PaymentResponse.newBuilder()
                 .setSuccess(true)
                 .setMessage("Payment processed successfully for customer " + customerId + " of amount " + amount)
                 .build();
 
         responseObserver.onNext(response);
+        //The and of method
         responseObserver.onCompleted();
     }
 
     @Override
     public void streamScannedItems(ScanRequest request, StreamObserver<ScannedItem> responseObserver) {
-        // Logic to stream scanned items
+        // Data requested by the customer
         String counterId = request.getCounterId();
 
-        // For demonstration, let's send a few scanned items
+        // Declare items
         ScannedItem item1 = ScannedItem.newBuilder()
                 .setProductId("001")
                 .setName("Apple")
@@ -49,6 +50,7 @@ public class SmartCheckoutService extends SmartCheckoutGrpc.SmartCheckoutImplBas
                 .setPrice(0.59f)
                 .build();
 
+        //Send the answer
         responseObserver.onNext(item1);
         responseObserver.onNext(item2);
         
@@ -56,6 +58,7 @@ public class SmartCheckoutService extends SmartCheckoutGrpc.SmartCheckoutImplBas
         responseObserver.onCompleted();
     }
 
+    //Run the server
     public static void main(String[] args) throws IOException, InterruptedException {
         Server server = ServerBuilder.forPort(9091)
                 .addService(new SmartCheckoutService())
